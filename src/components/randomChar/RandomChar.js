@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { CSSTransition, SwitchTransition} from 'react-transition-group';
 import useMarvelService from '../../services/MarvelService';
 import Spinner from "../spinner/Spinner"
 import ErrorMessage from "../errorMessage/ErrorMessage"
@@ -9,6 +10,7 @@ import mjolnir from '../../resources/img/mjolnir.png'
 function RandomChar (){
     
     const [char, setChar] = useState({});
+    const [charKey, setCharKey] = useState(Date.now());
     const {loading, error, getCharacter, clearError} = useMarvelService();
 
     useEffect(() => {
@@ -26,17 +28,31 @@ function RandomChar (){
 
 
     const updateChar = () => {
-        clearError();
-        const id = Math.floor(Math.random() * 21)
-        getCharacter(id)
-        .then(onCharLoaded)
+        setCharKey(Date.now());
+    
+         setTimeout(() => {
+            clearError();
+            const id = Math.floor(Math.random() * 21);
+            getCharacter(id)
+                .then(onCharLoaded);
+        }, 300);
 
        
     }
 
     const errorMessage = error ? <ErrorMessage/> : null;
     const spinner = loading ? <Spinner/> : null;
-    const content = !(loading || error || !char) ? <View char={char} /> : null;
+    const content = !(loading || error || !char) ?
+        <SwitchTransition mode="out-in">
+            <CSSTransition
+            key={charKey}
+            timeout={250}
+            classNames={"fade-randomChar"}>
+                <View char={char} /> 
+            </CSSTransition>
+        </SwitchTransition>
+     
+     : null;
 
     return (
         <div className="randomchar">

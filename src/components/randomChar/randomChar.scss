@@ -61,3 +61,21 @@
         right: -37px;
     }
 }
+
+.fade-randomChar-enter {
+    opacity: 0;
+}
+  
+.fade-randomChar-enter-active {
+    opacity: 1;
+    transition: opacity 250ms ease-in-out;
+}
+  
+.fade-randomChar-exit {
+    opacity: 1;
+}
+  
+.fade-randomChar-exit-active {
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+}

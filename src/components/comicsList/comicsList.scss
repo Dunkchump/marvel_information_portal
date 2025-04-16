@@ -34,3 +34,24 @@
         }
     }
 }
+
+.comics__item-enter {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  
+  .comics__item-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 400ms, transform 400ms;
+  }
+  
+  .comics__item-exit {
+    opacity: 1;
+  }
+  
+  .comics__item-exit-active {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 400ms, transform 400ms;
+  }

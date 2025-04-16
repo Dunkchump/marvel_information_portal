@@ -8,7 +8,7 @@
     align-items: start;
     &__img {
         width: 293px;
-        height: 450px;
+        min-width: 293px;
     }
     &__name {
         font-weight: bold;

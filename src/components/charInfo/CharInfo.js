@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { CSSTransition, SwitchTransition} from 'react-transition-group';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Skeleton from "../skeleton/Skeleton"
@@ -9,6 +10,7 @@ import './charInfo.scss';
 
 const CharInfo = (props) => {
     const [char, setChar] = useState(null)
+    const [charKey, setCharKey] = useState(Date.now());
     const {loading, error, getCharacter, clearError} = useMarvelService();
 
     useEffect(() => {
@@ -21,9 +23,14 @@ const CharInfo = (props) => {
         if (!charId){
             return;
         }
-        clearError()
-        getCharacter(charId)
-            .then(onCharLoaded)
+        setCharKey(Date.now());
+    
+        // Задержка перед загрузкой нового персонажа
+        setTimeout(() => {
+            clearError();
+            getCharacter(charId)
+                .then(onCharLoaded);
+        }, 300)
 
     }
 
@@ -35,7 +42,16 @@ const CharInfo = (props) => {
     const skeleton = char || loading || error ? null: <Skeleton/>;
     const errorMessage = error? <ErrorMessage/> : null;
     const spinner = loading ? <Spinner/> : null;
-    const content = !(loading || error || !char) ? <View char={char}/> : null;
+    const content = !(loading || error || !char) ?
+            <SwitchTransition mode="out-in">
+              <CSSTransition
+              key={charKey}
+              timeout={250}
+              classNames={"fade-randomChar"}>
+                  <View char={char} /> 
+              </CSSTransition>
+          </SwitchTransition>
+     : null;
 
     return (
         <div className="char__info">
