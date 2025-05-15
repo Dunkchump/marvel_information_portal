@@ -23,15 +23,11 @@ React Helmet - Document head management
 Marvel API - Data source for characters and comics
 
 🔧 Installation
-
 Clone the repository:
 bashgit clone https://github.com/yourusername/marvel-info-portal.git
-
 Install dependencies:
 bashcd marvel-info-portal
 npm install
-
 Start the development server:
 bashnpm start
-
 Open your browser and navigate to http://localhost:3000
